@@ -10,6 +10,7 @@ import {
   SupportButton,
 } from '@backstage/core-components';
 import { BlueprintsComponent } from '../BlueprintsComponent';
+import { DeploymentsComponent } from '../DeploymentsComponent';
 
 export const MainComponent = () => (
   <Page themeId="website">
@@ -30,6 +31,9 @@ export const MainComponent = () => (
         </Grid>
         <Grid item>
           <BlueprintsComponent />
+        </Grid>
+        <Grid item>
+          <DeploymentsComponent />
         </Grid>
       </Grid>
     </Content>
