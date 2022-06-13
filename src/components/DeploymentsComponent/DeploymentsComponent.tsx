@@ -5,8 +5,8 @@ import Alert from '@material-ui/lab/Alert';
 import useAsync from 'react-use/lib/useAsync';
 
 
-const CLOUDIFY_MANAGER_URL = 'http://52.211.68.154';
-const BACKSTAGE_BACKEND_URL = 'http://52.50.14.213:7007';
+const CLOUDIFY_MANAGER_URL = 'http://${CLOUDIFY_MANAGER_IP}';
+const BACKSTAGE_BACKEND_URL = 'http://${BACKSTAGE_BACKEND_IP}:7007';
 
 
 const useStyles = makeStyles({
