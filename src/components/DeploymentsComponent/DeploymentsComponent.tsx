@@ -81,7 +81,35 @@ const useStyles = makeStyles({
         display_name: deployment.display_name || deployment.id,
         blueprint_id: deployment.blueprint_id,
         labels: resolveLabels(deployment.labels),
-        actions: <MaterialButton href={deployment_url} color="primary" variant="contained">Uninstall</MaterialButton>
+        actions: 
+          <MaterialButton 
+            onClick={async () => {
+              const options = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Tenant': 'default_tenant'
+                },
+                body: JSON.stringify({
+                  'deployment_id': deployment.id,
+                  'workflow_id': 'uninstall'
+                })
+              };
+              const response = await fetch(
+                BACKSTAGE_BACKEND_URL + '/api/proxy/cloudify/api/executions',
+                options);
+              const data = await response.json();
+            
+              if (response.ok) {
+                alert('Deployment uninstalled successfully');
+              } else if (!response.ok) {
+                alert('Error')
+              }
+            }} 
+            color="primary" 
+            variant="contained">
+              Uninstall
+          </MaterialButton>
       };
     });
   

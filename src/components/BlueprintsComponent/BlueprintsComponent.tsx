@@ -81,7 +81,51 @@ export const DenseTable = ({ blueprints }: DenseTableProps) => {
       description: blueprint.description || 'Cloudify blueprint.',
       main_file_name: blueprint.main_file_name,
       labels: resolveLabels(blueprint.labels),
-      actions: <MaterialButton href={blueprint_url} color="primary" variant="contained">Deploy & Install</MaterialButton>
+      actions:
+        <MaterialButton 
+          onClick={async () => {
+            const deploy_options = {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Tenant': 'default_tenant'
+              },
+              body: JSON.stringify({
+                'blueprint_id': blueprint.id,
+                'inputs': {
+                  'cloudify_manager_host': '52.211.68.154'
+                }
+              })
+            };
+            const deploy_response = await fetch(
+              BACKSTAGE_BACKEND_URL + '/api/proxy/cloudify/api/deployments/' + blueprint.id + '_deployment',
+              deploy_options);
+
+            const install_options = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Tenant': 'default_tenant'
+              },
+              body: JSON.stringify({
+                'deployment_id': blueprint.id + '_deployment',
+                'workflow_id': 'install'
+              })
+            };
+            const install_response = await fetch(
+              BACKSTAGE_BACKEND_URL + '/api/proxy/cloudify/api/executions',
+              install_options);
+          
+            if (deploy_response.ok && install_response.ok) {
+              alert('Blueprint deployed and installed successfully')
+            } else if (!deploy_response.ok || !install_response.ok) {
+              alert('Error')
+            }
+          }} 
+        color="primary" 
+        variant="contained">
+          Deploy & Install
+      </MaterialButton>
     };
   });
 
