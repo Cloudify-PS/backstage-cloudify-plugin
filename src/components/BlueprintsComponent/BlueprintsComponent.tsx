@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import MaterialButton from '@material-ui/core/Button';
 import { Table, TableColumn, Progress } from '@backstage/core-components';
 import Alert from '@material-ui/lab/Alert';
 import useAsync from 'react-use/lib/useAsync';
@@ -53,6 +54,7 @@ export const DenseTable = ({ blueprints }: DenseTableProps) => {
     { title: 'Main file Name', field: 'main_file_name' },
     { title: 'Description', field: 'description' },
     { title: 'Labels', field: 'labels' },
+    { title: 'Actions', field: 'actions' }
   ];
 
   const data = blueprints.map(blueprint => {
@@ -76,9 +78,10 @@ export const DenseTable = ({ blueprints }: DenseTableProps) => {
       id: (
         <a href={blueprint_url} target="_blank">{blueprint.id}</a>
       ),
-      description: blueprint.description || 'Cloudify Blueprint.',
+      description: blueprint.description || 'Cloudify blueprint.',
       main_file_name: blueprint.main_file_name,
       labels: resolveLabels(blueprint.labels),
+      actions: <MaterialButton href={blueprint_url} color="primary" variant="contained">Deploy & Install</MaterialButton>
     };
   });
 
