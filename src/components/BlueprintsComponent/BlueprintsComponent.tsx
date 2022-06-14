@@ -92,9 +92,9 @@ export const DenseTable = ({ blueprints }: DenseTableProps) => {
               },
               body: JSON.stringify({
                 'blueprint_id': blueprint.id,
-                'inputs': {
-                  'cloudify_manager_host': '52.211.68.154'
-                }
+                // 'inputs': {
+                //   'cloudify_manager_host': '52.211.68.154'
+                // }
               })
             };
             const deploy_response = await fetch(
